@@ -186,19 +186,43 @@ int main()
     IMAGE menu_background;
     loadimage(&menu_background, _T("images/menu_background.png"));
 
-    RECT region_menu_reaction, region_menu_quit;
+    RECT region_menu_reaction, region_menu_threeballs, region_menu_follow, region_menu_hold, region_menu_options, region_menu_quit;
 
     region_menu_reaction.left = 710;
     region_menu_reaction.right = 910;
-    region_menu_reaction.top = 600;
-    region_menu_reaction.bottom = 691;
+    region_menu_reaction.top = 500;
+    region_menu_reaction.bottom = 591;
+
+    region_menu_threeballs.left = 1010;
+    region_menu_threeballs.right = 1210;
+    region_menu_threeballs.top = 500;
+    region_menu_threeballs.bottom = 591;
+
+    region_menu_follow.left = 710;
+    region_menu_follow.right = 910;
+    region_menu_follow.top = 620;
+    region_menu_follow.bottom = 711;
+
+    region_menu_hold.left = 1010;
+    region_menu_hold.right = 1210;
+    region_menu_hold.top = 620;
+    region_menu_hold.bottom = 711;
+
+    region_menu_options.left = 710;
+    region_menu_options.right = 910;
+    region_menu_options.top = 740;
+    region_menu_options.bottom = 831;
 
     region_menu_quit.left = 1010;
     region_menu_quit.right = 1210;
-    region_menu_quit.top = 800;
-    region_menu_quit.bottom = 891;
+    region_menu_quit.top = 740;
+    region_menu_quit.bottom = 831;
 
     reactionbutton menu_reaction = reactionbutton(region_menu_reaction, _T("images/menu_reaction_idle.png"), _T("images/menu_reaction_hovered.png"), _T("images/menu_reaction_pushed.png"));
+    threeballsbutton menu_threeballs = threeballsbutton(region_menu_threeballs, _T("images/menu_threeballs_idle.png"), _T("images/menu_threeballs_hovered.png"), _T("images/menu_threeballs_pushed.png"));
+    followbutton menu_follow = followbutton(region_menu_follow, _T("images/menu_follow_idle.png"), _T("images/menu_follow_hovered.png"), _T("images/menu_follow_pushed.png"));
+    holdbutton menu_hold = holdbutton(region_menu_hold, _T("images/menu_hold_idle.png"), _T("images/menu_hold_hovered.png"), _T("images/menu_hold_pushed.png"));
+    optionsbutton menu_options = optionsbutton(region_menu_options, _T("images/menu_options_idle.png"), _T("images/menu_options_hovered.png"), _T("images/menu_options_pushed.png"));
     quitbutton menu_quit = quitbutton(region_menu_quit, _T("images/menu_quit_idle.png"), _T("images/menu_quit_hovered.png"), _T("images/menu_quit_pushed.png"));
 
     BeginBatchDraw();
@@ -208,11 +232,20 @@ int main()
         while (peekmessage(&msg))
         {
             if (is_game_started)
-            { // gamestart后续需另外续写
+            {
+                // gamestart后续需另外续写
+            }
+            else if (is_options_open)
+            {
+                // 选项菜单后续需另外续写
             }
             else
             {
                 menu_reaction.processevent(msg);
+                menu_threeballs.processevent(msg);
+                menu_follow.processevent(msg);
+                menu_hold.processevent(msg);
+                menu_options.processevent(msg);
                 menu_quit.processevent(msg);
             }
         }
@@ -223,10 +256,19 @@ int main()
         if (is_game_started)
         {
         }
+        else if (is_options_open)
+        {
+            putimage(0, 0, &menu_background);
+            // 选项菜单绘制后续需另外续写
+        }
         else
         {
             putimage(0, 0, &menu_background);
             menu_reaction.Draw();
+            menu_threeballs.Draw();
+            menu_follow.Draw();
+            menu_hold.Draw();
+            menu_options.Draw();
             menu_quit.Draw();
         }
 
