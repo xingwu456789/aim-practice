@@ -15,7 +15,7 @@ static int reaction_times[5] = {0};
 
 double wait_end_time;
 double reaction_start_time;
-Reactionstate state;
+static Reactionstate state;
 
 static IMAGE reaction_start;
 static IMAGE reaction_wait;
@@ -67,6 +67,14 @@ void processreactionevent(ExMessage &msg)
             reaction_times[trial_count] = gettime() - reaction_start_time;
             ++trial_count;
             state = result;
+            if (trial_count == 5)
+            {
+                if (msg.message == WM_LBUTTONDOWN)
+                {
+                    state = ending;
+                    break;
+                }
+            }
             break;
         }
         break;
@@ -78,20 +86,10 @@ void processreactionevent(ExMessage &msg)
         }
         break;
     case result:
-        if (trial_count == 5)
+        if (msg.message == WM_LBUTTONDOWN)
         {
-            if (msg.message == WM_LBUTTONDOWN)
-            {
-                state = ending;
-            }
-        }
-        else
-        {
-            if (msg.message == WM_LBUTTONDOWN)
-            {
-                wait_end_time = gettime() + rand() % 3000 + 1000;
-                state = wait;
-            }
+            wait_end_time = gettime() + rand() % 3000 + 1000;
+            state = wait;
         }
         break;
     case ending:
