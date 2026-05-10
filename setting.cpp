@@ -7,7 +7,7 @@ void Setting::load()
         return;
     fscanf(f, "sensitivity=%f\n", &sensitivity);
     fscanf(f, "gamekind=%d\n", &gamekind);
-    fscanf(f, "volumn=%d\n", &volumn);
+    // fscanf(f, "volumn=%d\n", &volumn);
     fclose(f);
 }
 void Setting::save()
@@ -19,7 +19,7 @@ void Setting::save()
     }
     fprintf(f, "sensitivity=%f\n", sensitivity);
     fprintf(f, "gamekind=%d\n", gamekind);
-    fprintf(f, "volumn=%d\n", volumn);
+    // fprintf(f, "volumn=%d\n", volumn);
     fclose(f);
 }
 float Setting::getsen()

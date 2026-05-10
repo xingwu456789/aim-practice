@@ -15,10 +15,10 @@ void processoptionsevent(const ExMessage &msg)
         switch (msg.vkcode)
         {
         case VK_UP:
-            selected = (selected - 1 + 3) % 3;
+            selected = (selected - 1 + 2) % 2;
             break;
         case VK_DOWN:
-            selected = (selected + 1 + 3) % 3;
+            selected = (selected + 1) % 2;
             break;
         case VK_RIGHT:
             if (selected == 0)
@@ -36,16 +36,16 @@ void processoptionsevent(const ExMessage &msg)
                     break;
                 }
             }
-            else
-            {
-                if (setting.volumn < 100)
-                {
-                    ++setting.volumn;
-                    break;
-                }
-                else
-                    break;
-            }
+            // else
+            // {
+            //     if (setting.volumn < 100)
+            //     {
+            //         ++setting.volumn;
+            //         break;
+            //     }
+            //     else
+            //         break;
+            // }
         case VK_LEFT:
             if (selected == 0)
             {
@@ -62,16 +62,16 @@ void processoptionsevent(const ExMessage &msg)
                     break;
                 }
             }
-            else
-            {
-                if (setting.volumn > 0)
-                {
-                    --setting.volumn;
-                    break;
-                }
-                else
-                    break;
-            }
+            // else
+            // {
+            //     if (setting.volumn > 0)
+            //     {
+            //         --setting.volumn;
+            //         break;
+            //     }
+            //     else
+            //         break;
+            // }
         case VK_ESCAPE:
             setting.save();
             is_options_open = false;
@@ -88,15 +88,15 @@ void drawoptions()
     settextstyle(60, 0, _T("微软雅黑"));
     settextcolor(RGB(255, 255, 255));
     outtextxy(960 - 48, 120, _T("设置"));
-    const TCHAR *labels[] = {_T("游戏类型"), _T("灵敏度"), _T("音量")};
-    TCHAR value_str[3][32];
+    const TCHAR *labels[] = {_T("游戏类型"), _T("灵敏度")};
+    TCHAR value_str[2][32];
     wsprintf(value_str[0], setting.gamekind == 0 ? _T("CS2") : _T("Valorant"));
     _stprintf(value_str[1], _T("%.2f"), setting.sensitivity);
-    wsprintf(value_str[2], _T("%d%%"), setting.volumn);
+    // wsprintf(value_str[2], _T("%d%%"), setting.volumn);
 
     settextstyle(40, 0, _T("微软雅黑"));
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 2; i++)
     {
         int y = 400 + i * 100;
 
@@ -116,5 +116,5 @@ void drawoptions()
     settextstyle(24, 0, _T("微软雅黑"));
     settextcolor(RGB(140, 140, 140));
 
-    outtextxy(960 - 60, 900, _T("[ESC] 回到主菜单"));
+    outtextxy(750, 900, _T("[ESC] 回到主菜单，[↑][↓]切换选项，[←][→]改动数值"));
 }

@@ -89,6 +89,7 @@ void processthreeballs(const ExMessage &msg)
             return;
         if (msg.message == WM_KEYDOWN && msg.vkcode == VK_ESCAPE)
         {
+            state = threeballsstart;
             is_game_started = false;
             return;
         }
@@ -158,8 +159,9 @@ void drawthreeballs()
             fillcircle(sx, sy, balls[i].radius);
         }
         int center_x = 960, center_y = 540;
-        line(center_x - 10, center_y, center_x + 10, center_y);
-        line(center_x, center_y - 10, center_x, center_y + 10);
+        setlinecolor(RGB(255, 80, 80));
+        line(center_x - 5, center_y, center_x + 5, center_y);
+        line(center_x, center_y - 5, center_x, center_y + 5);
 
         setbkmode(TRANSPARENT);
         settextstyle(40, 0, _T("微软雅黑"));

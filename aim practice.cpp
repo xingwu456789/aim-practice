@@ -8,6 +8,7 @@
 #include "options.h"
 #include "camera.h"
 #include "threeballs.h"
+#include "follow.h"
 #include <ctime>
 
 bool running = true;
@@ -48,14 +49,20 @@ int main()
     InitReaction();
     initoptions();
     initthreeballs();
+    initfollow();
 
     int screen_cx = window_width / 2;
     int screen_cy = window_height / 2;
 
     BeginBatchDraw();
+    DWORD last_loop_time = GetTickCount();
     while (running)
     {
-        bool in_game = (is_game_started && game_mode == GameMode::threeballs);
+        DWORD loop_now = GetTickCount();
+        float dt = (loop_now - last_loop_time) / 1000.0f;
+        last_loop_time = loop_now;
+
+        bool in_game = (is_game_started && (game_mode == GameMode::threeballs || game_mode == GameMode::follow));
 
         cursor_locked = in_game;
 
@@ -87,6 +94,10 @@ int main()
             {
                 processthreeballs(msg);
             }
+            else if (is_game_started && game_mode == GameMode::follow)
+            {
+                followprocess(msg);
+            }
             else
             {
                 ProcessMenuEvent(msg);
@@ -113,6 +124,11 @@ int main()
             else if (game_mode == GameMode::threeballs)
             {
                 drawthreeballs();
+            }
+            else if (game_mode == GameMode::follow)
+            {
+                updatefollow(dt);
+                drawfollow();
             }
         }
         else if (is_options_open)
