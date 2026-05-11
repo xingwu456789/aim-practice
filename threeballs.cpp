@@ -137,7 +137,7 @@ void drawthreeballs()
         now_time = GetTickCount() - threeballs_start_time;
         if (now_time > 1000)
         {
-            KPM = score * 60 / (now_time / 1000);
+            KPM = (int)(score * 60.0f / (now_time / 1000.0f));
         }
         else
         {

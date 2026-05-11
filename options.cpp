@@ -49,7 +49,7 @@ void processoptionsevent(const ExMessage &msg)
         case VK_LEFT:
             if (selected == 0)
             {
-                setting.gamekind = (setting.gamekind - 1) % 2;
+                setting.gamekind = (setting.gamekind - 1 + 2) % 2;
                 break;
             }
             else if (selected == 1)
@@ -88,7 +88,7 @@ void drawoptions()
     settextstyle(60, 0, _T("微软雅黑"));
     settextcolor(RGB(255, 255, 255));
     outtextxy(960 - 48, 120, _T("设置"));
-    const TCHAR *labels[] = {_T("游戏类型"), _T("灵敏度")};
+    const TCHAR *labels[] = {_T("灵敏度类型"), _T("灵敏度")};
     TCHAR value_str[2][32];
     wsprintf(value_str[0], setting.gamekind == 0 ? _T("CS2") : _T("Valorant"));
     _stprintf(value_str[1], _T("%.2f"), setting.sensitivity);

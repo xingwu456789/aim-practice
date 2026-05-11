@@ -2,6 +2,9 @@
 #include <graphics.h>
 #include "common.h"
 
+void initthreeballs();
+void initfollow();
+
 class Button
 {
 public:
@@ -92,6 +95,7 @@ public:
 protected:
     void onclick()
     {
+        initthreeballs();
         is_game_started = true;
         game_mode = GameMode::threeballs;
     }
@@ -106,6 +110,7 @@ public:
 protected:
     void onclick()
     {
+        initfollow();
         is_game_started = true;
         game_mode = GameMode::follow;
     }
